@@ -1,14 +1,16 @@
+/* eslint-disable react/prop-types */
 import { BsHeart, BsPencil, BsThreeDotsVertical } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { todoAdded, todoRemoved } from "../../features/Store/CheckedSlice";
 import { BiTrash } from "react-icons/bi";
 import { useDeleteContactMutation } from "../../features/api/ContactApi";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
 
 const Table = ({ contact, contacts }) => {
   const [showActions, setShowActions] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
   const dispatch = useDispatch();
   const token = JSON.parse(localStorage.getItem("token"));
   const [deleteContact] = useDeleteContactMutation();
@@ -39,8 +41,33 @@ const Table = ({ contact, contacts }) => {
     }
   };
   const handleDelete = async (token, id) => {
-    const data = await deleteContact({ token, id });
+    // 
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data =  deleteContact({ token, id });
     console.log(data);
+        // Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        toast.success("Deleted Successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+      }
+    });
   };
   // useEffect(() => {
   // }, [checkedList]);
@@ -74,14 +101,12 @@ const Table = ({ contact, contacts }) => {
       <td className="text-center hidden md:table-cell text-sm">
         {contact.email}
       </td>
-      <td
-        className={`text-center  hidden md:table-cell text-sm`}
-      >
+      <td className={`text-center  hidden md:table-cell text-sm`}>
         {contact.phone}
       </td>
       <td
         className={`${
-          (showActions && !isInCheckList) || showDelete ? "" : "hidden"
+          showActions && !isInCheckList ? "" : "hidden"
         } text-right pr-12`}
       >
         <button className=" mx-3">
@@ -127,6 +152,20 @@ const Table = ({ contact, contacts }) => {
           </Link>
         </div> */}
       </td>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
     </tr>
   );
 };

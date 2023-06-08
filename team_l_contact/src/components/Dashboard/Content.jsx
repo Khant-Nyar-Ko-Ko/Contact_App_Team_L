@@ -13,6 +13,7 @@ import Table from "./Table";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAll, selectNone } from "../../features/Store/CheckedSlice";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const Content = () => {
   const token = JSON.parse(localStorage.getItem("token"));
@@ -21,6 +22,9 @@ const Content = () => {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.CheckedSlice.search);
   const searchResult = useSearchByNameQuery({ token, search });
+const handlePrint = () => {
+  window.print();
+};
 
   const contacts =
     search === ""
@@ -40,7 +44,10 @@ const Content = () => {
                 <th className=" hidden md:table-cell ">Email</th>
                 <th className=" hidden md:table-cell ">Phone No.</th>
                 <th>
-                  <button className="px-2 md:px-3 text-lg">
+                  <button
+                    className="px-2 md:px-3 text-lg"
+                    onClick={handlePrint}
+                  >
                     <AiFillPrinter />
                   </button>
                   <button className="px-2 md:px-3 text-lg">
@@ -115,6 +122,20 @@ const Content = () => {
             <BiPlus className="text-xl" />
           </button>
         </Link>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+
+        <ToastContainer />
       </div>
     </>
   );

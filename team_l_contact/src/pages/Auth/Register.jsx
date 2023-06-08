@@ -1,16 +1,20 @@
 import { useState } from "react";
-import loginIamge from "../../assets/login.jpg";
-import { Link } from "react-router-dom";
+import loginImage from "../../assets/login.jpg";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AiOutlineMail,
   AiOutlineEye,
   AiOutlineEyeInvisible,
 } from "react-icons/ai";
 import { useUserRegisterMutation } from "../../features/api/AuthApi";
+import { Loader } from "@mantine/core";
+import { toast, ToastContainer } from "react-toastify";
+// import { useDispatch } from "react-redux";
 const Register = () => {
-  // const navigate = useNavigate();
+  // eslint-disable-next-line no-undef
+const navigate = useNavigate()
   // const dispatch = useDispatch();
-  const [userRegister] = useUserRegisterMutation();
+  const [userRegister, {isLoading}] = useUserRegisterMutation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +25,23 @@ const Register = () => {
   const registerHandler = async (user) => {
     const data = await userRegister(user);
     console.log(data);
+    if( data?.data?.success) {
+      // localStorage.setItem("token", JSON.stringify(data?.token));
+      // localStorage.setItem("user", JSON.stringify(data?.user));
+      // dispatch(userRegister({user: data?.user, token: data?.token}));
+      navigate("/login");
+    }else{
+       toast.error("Something went wrong!", {
+         position: "top-right",
+         autoClose: 5000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "light",
+       });
+    }
     // if (data?.success) {
     //   console.log("register successfully!");
     //   dispatch(addUser({ user: data?.user, token: data?.token }));
@@ -114,7 +135,11 @@ const Register = () => {
                 className="border-none  w-full my-2 bg-[#3c37ff] text-slate-300 focus:outline-blue-700 py-2 px-3 rounded-lg"
                 onClick={() => registerHandler(user)}
               >
-                Create account
+                {isLoading ? (
+                  <Loader className="block mx-auto text-sm" />
+                ) : (
+                  "Create"
+                )}
               </button>
               <span className="text-sm font-normal text-slate-400 mt-3">
                 Already have an account?
@@ -144,10 +169,24 @@ const Register = () => {
 
         {/* right side start  */}
         <div className="w-1/2 hidden md:block h-full">
-          <img src={loginIamge} alt="" />
+          <img src={loginImage} alt="" />
         </div>
 
         {/* right side end  */}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+
+        <ToastContainer />
       </div>
     </div>
   );

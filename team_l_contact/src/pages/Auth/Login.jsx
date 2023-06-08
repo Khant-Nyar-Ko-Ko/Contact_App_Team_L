@@ -7,10 +7,12 @@ import {
   AiOutlineEyeInvisible,
 } from "react-icons/ai";
 import { useUserLoginMutation } from "../../features/api/AuthApi";
+import { toast, ToastContainer } from "react-toastify";
+import { Loader } from "@mantine/core";
 // import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
-  const [userLogin] = useUserLoginMutation();
+  const [userLogin, { isLoading }] = useUserLoginMutation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("admin@gmail.com");
   const [password, setPassword] = useState("admin123");
@@ -22,9 +24,7 @@ const Login = () => {
     if (data?.success) {
       localStorage.setItem("token", JSON.stringify(data?.token));
       localStorage.setItem("user", JSON.stringify(data?.user));
-      navigate("/contact");
-    } else {
-      // toast.error("Something went wrong!", {
+      // toast.success("Congrats, Login Successfully!", {
       //   position: "top-right",
       //   autoClose: 5000,
       //   hideProgressBar: false,
@@ -34,11 +34,23 @@ const Login = () => {
       //   progress: undefined,
       //   theme: "light",
       // });
+      navigate("/contact");
+    } else {
+      toast.error("Something went wrong!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
+
   return (
     <div>
-      
       <div className="flex items-center justify-center gap-10 bg-white h-screen md:p-5 md:px-10 w-full">
         {/* left side start  */}
         <div className=" w-full md:w-1/2 md:p-5 rounded-lg h-full bg-[#f3f5f9]">
@@ -98,7 +110,8 @@ const Login = () => {
                 className="border-none  w-full my-5 bg-[#3c37ff] text-slate-300 focus:outline-blue-700 py-2 px-3 rounded-lg"
                 onClick={() => loginHandler(user)}
               >
-                Login
+                {isLoading ? <Loader className="block mx-auto text-sm"/> : "Login"}
+                {/* Login */}
               </button>
               <span className="text-sm font-normal text-slate-400 mt-5">
                 Do not have an account?
@@ -117,7 +130,6 @@ const Login = () => {
                 <span>
                   Need help or suggest anything{" "}
                   <Link to="/" className="text-[#3c37ff] hover:underline ">
-                    {" "}
                     here
                   </Link>
                 </span>
@@ -134,7 +146,7 @@ const Login = () => {
 
         {/* right side end  */}
         {/* React Toast  */}
-        {/* <ToastContainer
+        <ToastContainer
           position="top-right"
           autoClose={5000}
           hideProgressBar={false}
@@ -146,8 +158,8 @@ const Login = () => {
           pauseOnHover
           theme="light"
         />
-       
-        <ToastContainer /> */}
+
+        <ToastContainer />
       </div>
     </div>
   );
