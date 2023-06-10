@@ -14,6 +14,7 @@ import {BiTrash} from 'react-icons/bi'
 import { NavLink } from "react-router-dom"
 
 const Navbar = () => {
+  const [showSidebar,setShowSidebar] = useState(true)
   const [userLogout] = useUserLogoutMutation();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -29,22 +30,24 @@ const Navbar = () => {
     }
   };
   const [showProfile, setShowProfile] = useState(false);
-  console.log(showProfile);
+  console.log(showSidebar);
   return (
     <>
       <div className=" px-2 flex w-full justify-between items-center gap-4 text-sm md:text-base  md:px-5 shadow-lg">
         <div className="flex items-center justify-center gap-2 md:gap-5 my-3 md:my-5">
-          <button
-            className="menu text-md md:text-2xl block sm:hidden "
-            // onClick={() => document.documentElement.classList.add("dark")}
-          >
-            <div className="drawer">
+
+
+            <div className="drawer" onClick={() => setShowSidebar(!showSidebar)}>
               <input id="my-drawer" type="checkbox" className="drawer-toggle" />
               <div className="drawer-content">
-                <label htmlFor="my-drawer" className=" drawer-button"> <FcMenu /> </label>
+                <button className="menu text-md" onClick={() => setShowSidebar(!showSidebar)}>
+                  <label htmlFor="my-drawer" className=" drawer-button lg:hidden">
+                    <FcMenu /> 
+                  </label>
+                </button>
               </div> 
               <div className="drawer-side w-60">
-                <label htmlFor="my-drawer" className="drawer-overlay"></label>
+                <label htmlFor="my-drawer" className="drawer-overlay">
                 <div className=" bg-base-100 h-full w-full z-50">
             <ul className='flex-col flex pt-10'>
                 <NavLink to='/contact'>
@@ -95,10 +98,10 @@ const Navbar = () => {
                 <h1>Label</h1>
                 <BsPlusLg />
             </div>
-        </div>
+                </div>
+                </label>
               </div>
             </div>
-          </button>
           <div className="hidden md:flex">
             <img
               src="https://www.gstatic.com/images/branding/product/2x/contacts_2022_48dp.png"
