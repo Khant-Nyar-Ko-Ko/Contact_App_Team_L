@@ -7,25 +7,33 @@ import {
 } from "react-icons/bi";
 import {
   useGetContactsQuery,
+  usePaginatePagesQuery,
   useSearchByNameQuery,
 } from "../../features/api/ContactApi";
 import Table from "./Table";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAll, selectNone } from "../../features/Store/CheckedSlice";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import Paginate from "./Paginate";
+import { useState } from "react";
 
 const Content = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(searchParams.get("page") || 1);
+  const page = searchParams.get("page")
+    ? searchParams.get("page")
+    : currentPage;
   const token = JSON.parse(localStorage.getItem("token"));
-  const response = useGetContactsQuery(token);
+  const response = usePaginatePagesQuery({ token, page });
   const checkedList = useSelector((state) => state.CheckedSlice.contacts);
   const dispatch = useDispatch();
   const search = useSelector((state) => state.CheckedSlice.search);
   const searchResult = useSearchByNameQuery({ token, search });
-const handlePrint = () => {
-  window.print();
-};
-
+  const handlePrint = () => {
+    window.print();
+  };
+const totalPages = response?.data?.contacts?.last_page
   const contacts =
     search === ""
       ? response?.data?.contacts?.data
@@ -136,6 +144,12 @@ const handlePrint = () => {
         />
 
         <ToastContainer />
+        <Paginate
+          setCurrentPage={setCurrentPage}
+          setSearchParams={setSearchParams}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
       </div>
     </>
   );
