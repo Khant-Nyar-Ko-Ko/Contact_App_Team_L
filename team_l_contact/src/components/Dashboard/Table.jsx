@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { BsHeart, BsPencil, BsThreeDotsVertical } from "react-icons/bs";
-import {  useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { todoAdded, todoRemoved } from "../../features/Store/CheckedSlice";
 import { BiTrash } from "react-icons/bi";
@@ -41,7 +41,7 @@ const Table = ({ contact, contacts }) => {
     }
   };
   const handleDelete = async (token, id) => {
-    // 
+    //
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -52,8 +52,8 @@ const Table = ({ contact, contacts }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const data =  deleteContact({ token, id });
-    console.log(data);
+        const data = deleteContact({ token, id });
+        console.log(data);
         // Swal.fire("Deleted!", "Your file has been deleted.", "success");
         toast.success("Deleted Successfully!", {
           position: "top-right",
@@ -65,7 +65,6 @@ const Table = ({ contact, contacts }) => {
           progress: undefined,
           theme: "light",
         });
-
       }
     });
   };
@@ -74,9 +73,7 @@ const Table = ({ contact, contacts }) => {
   return (
     <tr
       key={contact.id}
-      className={` ${
-        showActions || (isInCheckList ? "bg-slate-100" : "")
-      } px-2 hover-item h-10 hover:bg-slate-100`}
+      className="px-2 hover-item h-10 hover:bg-slate-100"
       onMouseOver={() => handleMouseEnter(contact.id)}
       onMouseOut={() => handleMouseLeave(contact.id)}
     >
@@ -107,7 +104,7 @@ const Table = ({ contact, contacts }) => {
       <td
         className={`${
           showActions && !isInCheckList ? "" : "hidden"
-        } text-right pr-20`}
+        } text-right pr-5 md:pr-20`}
       >
         <button className=" mx-3">
           <BsHeart />

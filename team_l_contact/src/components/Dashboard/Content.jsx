@@ -125,7 +125,7 @@ const totalPages = response?.data?.contacts?.last_page
           )}
         </table>
         <Link to="/create">
-          <button className=" p-3 rounded-full absolute right-10 bottom-12 border-2 border-x-blue-500 border-y-blue-500 border-slate-600 text-blue-500">
+          <button className=" p-3 rounded-full fixed right-10 bottom-12 border-2 border-x-blue-500 border-y-blue-500 border-slate-600 text-blue-500">
             <BiPlus className="text-xl" />
           </button>
         </Link>

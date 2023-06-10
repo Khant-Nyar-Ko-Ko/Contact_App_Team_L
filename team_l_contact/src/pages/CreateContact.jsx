@@ -35,7 +35,7 @@ const CreateContent = () => {
       <div className="flex w-full">
         <LeftSidebar />
 
-        <div className="flex justify-start mt-4 px-20 flex-col w-full items-start h-full">
+        <div className="flex justify-start mt-4 p-3 md:p-10 flex-col w-full items-start h-full">
           <form
             onSubmit={form.onSubmit(async (values) => {
                 // console.log(values);
