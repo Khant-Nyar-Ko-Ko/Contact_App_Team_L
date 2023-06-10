@@ -32,7 +32,10 @@ const Content = () => {
   const handlePrint = () => {
     window.print();
   };
-const totalPages = response?.data?.contacts?.last_page
+  const totalPages =
+    search === ""
+      ? response?.data?.contacts?.last_page
+      : searchResult?.data?.contacts?.last_page;
   const contacts =
     search === ""
       ? response?.data?.contacts?.data
