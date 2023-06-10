@@ -23,7 +23,7 @@ const Content = () => {
   const page = searchParams.get("page")
     ? searchParams.get("page")
     : currentPage;
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token = localStorage.getItem("token");
   const response = usePaginatePagesQuery({ token, page });
   const checkedList = useSelector((state) => state.CheckedSlice.contacts);
   const dispatch = useDispatch();

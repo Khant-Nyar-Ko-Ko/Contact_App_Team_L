@@ -12,7 +12,7 @@ import { toast, ToastContainer } from "react-toastify";
 const Table = ({ contact, contacts }) => {
   const [showActions, setShowActions] = useState(false);
   const dispatch = useDispatch();
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token = localStorage.getItem("token");
   const [deleteContact] = useDeleteContactMutation();
   const checkedList = useSelector((state) => state.CheckedSlice.contacts);
 
