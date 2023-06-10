@@ -107,7 +107,7 @@ const Table = ({ contact, contacts }) => {
       <td
         className={`${
           showActions && !isInCheckList ? "" : "hidden"
-        } text-right pr-12`}
+        } text-right pr-20`}
       >
         <button className=" mx-3">
           <BsHeart />

@@ -6,7 +6,6 @@ import {
   BiPlus,
 } from "react-icons/bi";
 import {
-  useGetContactsQuery,
   usePaginatePagesQuery,
   useSearchByNameQuery,
 } from "../../features/api/ContactApi";
@@ -49,7 +48,7 @@ const totalPages = response?.data?.contacts?.last_page
             {!isCheckedMode ? (
               <tr className=" border-b-[1px] border-slate-200 ">
                 <th className="py-4">Name</th>
-                <th className=" hidden md:table-cell ">Email</th>
+                <th className=" hidden md:table-cell">Email</th>
                 <th className=" hidden md:table-cell ">Phone No.</th>
                 <th>
                   <button
@@ -144,12 +143,14 @@ const totalPages = response?.data?.contacts?.last_page
         />
 
         <ToastContainer />
-        <Paginate
-          setCurrentPage={setCurrentPage}
-          setSearchParams={setSearchParams}
-          currentPage={currentPage}
-          totalPages={totalPages}
-        />
+        <div className="flex justify-center mt-36">
+          <Paginate
+            setCurrentPage={setCurrentPage}
+            setSearchParams={setSearchParams}
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
+        </div>
       </div>
     </>
   );
