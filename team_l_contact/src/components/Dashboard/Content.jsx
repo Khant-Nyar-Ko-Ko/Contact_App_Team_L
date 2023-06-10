@@ -125,7 +125,7 @@ const totalPages = response?.data?.contacts?.last_page
           )}
         </table>
         <Link to="/create">
-          <button className=" p-3 rounded-full absolute right-10 bottom-10 border-2 border-slate-600">
+          <button className=" p-3 rounded-full absolute right-10 bottom-12 border-2 border-x-blue-500 border-y-blue-500 border-slate-600 text-blue-500">
             <BiPlus className="text-xl" />
           </button>
         </Link>
@@ -143,7 +143,7 @@ const totalPages = response?.data?.contacts?.last_page
         />
 
         <ToastContainer />
-        <div className="flex justify-center mt-36">
+        <div className="flex justify-center mt-56 mb-6 md:mt-36">
           <Paginate
             setCurrentPage={setCurrentPage}
             setSearchParams={setSearchParams}
